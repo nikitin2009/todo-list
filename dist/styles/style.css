@@ -1,0 +1,15 @@
+body {
+  font-family: cursive;
+  margin: 0;
+  padding: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+#content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
