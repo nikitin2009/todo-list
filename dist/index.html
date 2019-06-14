@@ -4,37 +4,113 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>TODO list</title>
+  <title>TODO list app</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
 
+  <h1 class="text-center text-white">Just TODO it!</h1>
+
   <div id="app">
-    <aside>
-      <h2>My projects</h2>
-      <ul id="projectsList">
-        <li>Default project</li>
-      </ul>
-      <a href="#">Edit projects list</a>
+
+    <aside class="text-white bg-secondary">
+      <h2 class="mb-3 px-5">My projects</h2>
+      <div id="projectsList" class="list-group list-group-flush mb-2">
+        <a href="#" class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center active">
+          Default project
+          <span class="badge badge-danger badge-pill" title="Remove the project">&times;</span>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center">
+          Default project
+          <span class="badge badge-danger badge-pill" title="Remove the project">&times;</span>
+        </a>
+      </div>
+      <div class="text-center">
+        <a href="#" title="Add new project" class="h3 text-white">+</a>
+      </div>
     </aside>
 
-    <main>
-      <h1>Default project</h1>
-      <ul id="tasksList">
-        <li>
-          <a href="#">A regular task</a>
-        </li>
-        <li>
-          <a href="#">A task with expired due date</a>
-        </li>
-        <li>
-          <a href="#">A hight priority task</a>
-        </li>
-        <li>
-          <a href="#">A low priority task</a>
-        </li>
-      </ul>
+    <main class="flex-fill d-flex">
+
+      <div id="tasksView" class="ml-3">
+        <h2 class="mb-3 px-5">Default project</h2>
+        <div id="tasksList" class="list-group list-group-flush mb-2">
+          <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active">
+            <span class="badge badge-success" title="Priority: regular">&nbsp;</span>
+            <span class="title flex-fill mx-2">A regular task</span>
+            <span class="small due-date">(due on 31.08.2019)</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <span class="badge badge-success" title="Priority: regular">&nbsp;</span>
+            <span class="title flex-fill mx-2">A task with expired due date</span>
+            <span class="small due-date">(due on 31.08.2019)</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <span class="badge badge-danger" title="Priority: hight">&nbsp;</span>
+            <span class="title flex-fill mx-2">A hight priority task</span>
+            <span class="small due-date">(due on 31.08.2019)</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <span class="badge badge-secondary" title="Priority: low">&nbsp;</span>
+            <span class="title flex-fill mx-2">A low priority task</span>
+            <span class="small due-date text-danger">(due on 31.08.2010)</span>
+          </a>
+        </div>
+        <div class="text-center">
+          <a href="#" title="Add new TODO" class="h3">+</a>
+        </div>
+      </div>
+
+      <div id="singleTaskView" class="flex-fill bg-primary text-white mr-3 p-3">
+        <form>
+          <div class="form-group">
+            <label class="sr-only" for="title">Title</label>
+            <input type="text" class="form-control form-control-lg" id="title" value="A regular task" required placeholder="Title">
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" id="description" rows="5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla! Esse sint numquam laboriosam saepe quidem, veniam eaque nulla temporibus provident accusamus autem reprehenderit facilis quibusdam eius et soluta?</textarea>
+          </div>
+          <div class="form-group">
+            <label for="dueDate">Due on:</label>
+            <input type="date" class="form-control form-control-sm" id="dueDate" value="2019-08-31">
+          </div>
+
+          <div class="form-group">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="priority" id="low" value="low">
+              <label class="form-check-label" for="low">
+                <span class="badge badge-secondary">&nbsp;</span>
+                Low
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="priority" id="regular" value="regular" checked>
+              <label class="form-check-label" for="regular">
+                <span class="badge badge-success">&nbsp;</span>
+                Regular
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="priority" id="high" value="high">
+              <label class="form-check-label" for="high">
+                <span class="badge badge-danger">&nbsp;</span>
+                High
+              </label>
+            </div>
+          </div>
+          <div class="form-group text-right">
+            <button class="btn btn-danger">Delete the TODO</button>
+            <button type="submit" class="btn btn-success" disabled>Update</button>
+          </div>
+
+
+        </form>
+      </div>
+
     </main>
+
   </div>
   
   <script src="./js/main.js"></script>

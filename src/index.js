@@ -11,4 +11,4 @@ const App = (function() {
   }
 })();
 
-App.init();
+// App.init();
