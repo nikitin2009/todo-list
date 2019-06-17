@@ -2,7 +2,11 @@ export default class Project {
 
   constructor(title) {
     this.title = title;
-    this.tasks = [];
+    this.toDos = [];
+    this.id = Project.id;
+    Project.id++;
   }
 
 }
+
+Project.id = 0;
