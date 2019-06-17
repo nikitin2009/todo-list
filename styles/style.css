@@ -31,11 +31,3 @@ main {
   background-color: #fff;
   color: #000;
 }
-
-#projectsList .list-group-item .badge {
-  display: none;
-}
-
-#projectsList .list-group-item.active .badge {
-  display: block;
-}
