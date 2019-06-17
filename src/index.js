@@ -1,15 +1,22 @@
 import DOM from './DOM';
 import Project from './project';
+import Todo from './todo';
+import getSampleData from './getSampleData';
 
 const App = (function() {
 
   const state = {
     projects: [],
     currentProject: null,
+    currentTodo: null,
   };
 
   function setInitState() {
-    state.projects = [new Project('Default project')];
+    const projects = localStorage.getItem('projects') ? 
+                      JSON.parse(localStorage.getItem('projects')) : 
+                      getSampleData();
+
+    state.projects = projects;
     state.currentProject = state.projects[0];
   }
 
@@ -58,6 +65,7 @@ const App = (function() {
     setInitState();
     setEventListeners();
     DOM.renderProjects(state.projects, projectClickHandler, projectRemoveHandler);
+    DOM.renderToDos(state.currentProject, toDoClickHandler);
   }
 
   return {
