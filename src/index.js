@@ -1,9 +1,21 @@
+import DOM from './DOM';
+import Project from './project';
 
 const App = (function() {
-  const entryPoint = document.getElementById('app');
+
+  const state = {
+    projects: [],
+    currentProject: null,
+  };
+
+  function setState() {
+    state.projects = [new Project('Default project')];
+    state.currentProject = state.projects.first;
+  }
 
   function init() {
-    entryPoint.innerHTML = '<h1>Hello world</h1>';
+    setState();
+    DOM.renderProjects(state.projects);
   }
 
   return {
@@ -11,4 +23,4 @@ const App = (function() {
   }
 })();
 
-// App.init();
+App.init();
