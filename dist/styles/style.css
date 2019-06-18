@@ -27,6 +27,14 @@ main {
   padding: 20px 0;
 }
 
+#projectsList .list-group-item .badge {
+  display: none;
+}
+
+#projectsList .list-group-item.active .badge {
+  display: block;
+}
+
 #projectsList .list-group-item.active {
   background-color: #fff;
   color: #000;

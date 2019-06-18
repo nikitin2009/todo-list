@@ -11,6 +11,10 @@ const App = (function() {
     currentTodo: null,
   };
 
+  function updateLocalStorage() {
+    localStorage.setItem('projects', JSON.stringify(state.projects));
+  }
+
   function setInitState() {
     const projects = localStorage.getItem('projects') ? 
                       JSON.parse(localStorage.getItem('projects')) : 
@@ -24,11 +28,11 @@ const App = (function() {
   function setEventListeners() {
     const addProjectLink = document.getElementById('addProject');
 
-    addProjectLink.addEventListener('click', addProjectHandle);
+    addProjectLink.addEventListener('click', addProjectHandler);
   }
 
   //=============== Projects
-  function addProjectHandle(e) {
+  function addProjectHandler(e) {
     e.preventDefault();
 
     const projectTitle = prompt('Please enter project title');
@@ -37,6 +41,8 @@ const App = (function() {
       const project = new Project(projectTitle);
       state.projects.push(project);
       state.currentProject = project;
+      updateLocalStorage();
+
       const projectElement = DOM.addProject(project, projectClickHandler, projectRemoveHandler);
       DOM.setActiveProject(projectElement);
       DOM.renderToDos(state.currentProject, toDoClickHandler);
@@ -59,10 +65,22 @@ const App = (function() {
 
     const confirmationCopy = 'Are you sure, you want to remove the project? (All TODOs in it will be removed)';
     if (confirm(confirmationCopy)) {
+      const projectsListNode = e.target.parentNode.parentNode;
       const projectId = e.target.parentElement.dataset.projectId;
       state.projects = state.projects.filter(project => project.id !== projectId);
-      state.currentProject = null;
+      updateLocalStorage();
       DOM.removeProject(e.target.parentElement);
+
+      const newCurrentProject = state.projects[0];
+      
+      if (newCurrentProject) {
+        state.currentProject = newCurrentProject;
+        
+        DOM.setActiveProject(projectsListNode.children[0]);
+        DOM.renderToDos(newCurrentProject, toDoClickHandler);
+      } else {
+        state.currentProject = null;
+      }
     }
   }
 
