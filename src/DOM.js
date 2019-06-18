@@ -65,6 +65,7 @@ const DOM = (function() {
     addToDoButtonContainer.append(addToDoButton)
 
     toDosView.innerHTML = '';
+    toDosList.innerHTML = '';
     toDosView.append(title);
     toDosView.append(toDosList);
     toDosView.append(addToDoButtonContainer);
@@ -74,12 +75,65 @@ const DOM = (function() {
     });
   }
 
+  function addToDo(toDo, toDoClickHandler) {
+    const a = document.createElement('a');
+    const priority = document.createElement('span');
+    const title = document.createElement('span');
+    const date = document.createElement('span');
+    const priorityBadgeClass = getPriorityBadgeClass(toDo.priority);
+
+    priority.classList.add('badge', `badge-${ priorityBadgeClass }`);
+    priority.innerHTML = '&nbsp;';
+    priority.title = `Priority: ${ toDo.priority }`;
+
+    title.classList.add('title', 'flex-fill', 'mx-2');
+    title.innerHTML = toDo.title;
+
+    date.classList.add('small', 'due-date', 'text-danger');
+    date.innerHTML = `(due on ${ toDo.dueDate })`;
+
+    a.href = '#';
+    a.dataset.toDoId = toDo.id;
+    a.append(priority);
+    a.append(title);
+    a.append(date);
+    a.classList.add('list-group-item',
+                    'list-group-item-action',
+                    'd-flex',
+                    'justify-content-between',
+                    'align-items-center');
+    a.addEventListener('click', toDoClickHandler)
+    toDosList.append(a);
+  }
+
+  function setActiveToDo(toDoElement) {
+    const currentActive = toDoElement.parentElement.querySelector('.active');
+    if (currentActive) currentActive.classList.remove('active');
+    toDoElement.classList.add('active');
+  }
+
+  function getPriorityBadgeClass(priority) {
+    let className = '';
+    switch (priority) {
+      case 'regular':
+        className = 'success';
+        break;
+      case 'high':
+        className = 'danger';
+        break;
+      case 'low':
+        className = 'secondary';      
+    }
+    return className;
+  }
+
   return {
     renderProjects,
     addProject,
     removeProject,
     setActiveProject,
     renderToDos,
+    setActiveToDo
   }
 
 })();

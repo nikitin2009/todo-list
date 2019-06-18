@@ -5,6 +5,10 @@ export default class Todo {
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
+    this.id = Todo.id;
+    Todo.id++;
   }
 
 }
+
+Todo.id = 0;

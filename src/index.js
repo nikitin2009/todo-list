@@ -26,6 +26,7 @@ const App = (function() {
     addProjectLink.addEventListener('click', addProjectHandle);
   }
 
+  //=============== Projects
   function addProjectHandle(e) {
     e.preventDefault();
 
@@ -58,6 +59,15 @@ const App = (function() {
       state.currentProject = null;
       DOM.removeProject(e.target.parentElement);
     }
+  }
+
+  //=========== ToDos
+  function toDoClickHandler(e) {
+    e.preventDefault();
+    const toDoId = e.target.dataset.toDoId;
+    state.currentTodo = state.currentProject.toDos.find(toDo => toDo.id == toDoId);
+    
+    DOM.setActiveToDo(e.target);
   }
 
 
