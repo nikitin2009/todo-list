@@ -7,6 +7,8 @@ const DOM = (function() {
   const toDosView = document.getElementById('toDosView');
   const toDosList = document.getElementById('toDosList');
 
+  const singleToDoView = document.getElementById('singleToDoView');
+
   //================ Projects
   function renderProjects(projects, projectClickHandler, projectRemoveHandler) {
     projectsList.innerHTML = '';
@@ -134,13 +136,73 @@ const DOM = (function() {
     return className;
   }
 
+  function renderSingleToDo(toDo) {
+    const completeButton = document.createElement('button');
+    const completeButtonContainer = document.createElement('div');
+    const form = document.createElement('form');
+
+    completeButton.classList.add('btn', 'btn-success');
+    completeButton.innerHTML = 'Complete &#10003;';
+
+    completeButtonContainer.classList.add('text-right', 'mb-3');
+    completeButtonContainer.append(completeButton);
+
+    form.innerHTML = `
+      <div class="form-group">
+        <label class="sr-only" for="title">Title</label>
+        <input type="text" class="form-control form-control-lg" id="title" value="A regular task" required placeholder="Title">
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control" id="description" rows="5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla! Esse sint numquam laboriosam saepe quidem, veniam eaque nulla temporibus provident accusamus autem reprehenderit facilis quibusdam eius et soluta?</textarea>
+      </div>
+      <div class="form-group">
+        <label for="dueDate">Due on:</label>
+        <input type="date" class="form-control form-control-sm" id="dueDate" value="2019-08-31">
+      </div>
+
+      <div class="form-group">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="priority" id="low" value="low">
+          <label class="form-check-label" for="low">
+            <span class="badge badge-secondary">&nbsp;</span>
+            Low
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="priority" id="regular" value="regular" checked>
+          <label class="form-check-label" for="regular">
+            <span class="badge badge-success">&nbsp;</span>
+            Regular
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="priority" id="high" value="high">
+          <label class="form-check-label" for="high">
+            <span class="badge badge-danger">&nbsp;</span>
+            High
+          </label>
+        </div>
+      </div>
+      <div class="form-group text-right">
+        <button class="btn btn-danger">Delete the TODO</button>
+        <button type="submit" class="btn btn-warning" disabled>Update</button>
+      </div>
+    `;
+
+    singleToDoView.innerHTML = '';
+    singleToDoView.append(completeButtonContainer);
+    singleToDoView.append(form);
+  }
+
   return {
     renderProjects,
     addProject,
     removeProject,
     setActiveProject,
     renderToDos,
-    setActiveToDo
+    setActiveToDo,
+    renderSingleToDo,
   }
 
 })();

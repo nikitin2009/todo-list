@@ -77,6 +77,7 @@ const App = (function() {
     setEventListeners();
     DOM.renderProjects(state.projects, projectClickHandler, projectRemoveHandler);
     DOM.renderToDos(state.currentProject, toDoClickHandler);
+    DOM.renderSingleToDo(state.currentTodo);
   }
 
   return {
