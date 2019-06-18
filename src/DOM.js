@@ -1,3 +1,5 @@
+import {format, compareAsc} from 'date-fns';
+
 const DOM = (function() {
 
   const projectsList = document.getElementById('projectsList');
@@ -73,6 +75,8 @@ const DOM = (function() {
     project.toDos.forEach(toDo => {
       addToDo(toDo, toDoClickHandler);
     });
+
+    toDosList.children[0].classList.add('active');
   }
 
   function addToDo(toDo, toDoClickHandler) {
@@ -89,8 +93,11 @@ const DOM = (function() {
     title.classList.add('title', 'flex-fill', 'mx-2');
     title.innerHTML = toDo.title;
 
-    date.classList.add('small', 'due-date', 'text-danger');
-    date.innerHTML = `(due on ${ toDo.dueDate })`;
+    date.innerHTML = `(due on ${ format(toDo.dueDate, 'DD/MM/YYYY') })`;
+    date.classList.add('small', 'due-date');
+    if (new Date() > toDo.dueDate) {
+      date.classList.add('text-danger', 'font-weight-bold');
+    }
 
     a.href = '#';
     a.dataset.toDoId = toDo.id;

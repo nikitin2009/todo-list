@@ -18,6 +18,7 @@ const App = (function() {
 
     state.projects = projects;
     state.currentProject = state.projects[0];
+    state.currentTodo = state.currentProject.toDos[0];
   }
 
   function setEventListeners() {
