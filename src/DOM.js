@@ -1,4 +1,4 @@
-import {format, compareAsc} from 'date-fns';
+import {format, isPast} from 'date-fns';
 
 const DOM = (function() {
 
@@ -97,7 +97,7 @@ const DOM = (function() {
 
     date.innerHTML = `(due on ${ format(toDo.dueDate, 'DD/MM/YYYY') })`;
     date.classList.add('small', 'due-date');
-    if (new Date() > toDo.dueDate) {
+    if (isPast(toDo.dueDate)) {
       date.classList.add('text-danger', 'font-weight-bold');
     }
 
@@ -141,6 +141,12 @@ const DOM = (function() {
     const completeButtonContainer = document.createElement('div');
     const form = document.createElement('form');
 
+    const priority = {
+      low: toDo.priority == 'low',
+      regular: toDo.priority == 'regular',
+      high: toDo.priority == 'high'
+    }
+
     completeButton.classList.add('btn', 'btn-success');
     completeButton.innerHTML = 'Complete &#10003;';
 
@@ -150,34 +156,37 @@ const DOM = (function() {
     form.innerHTML = `
       <div class="form-group">
         <label class="sr-only" for="title">Title</label>
-        <input type="text" class="form-control form-control-lg" id="title" value="A regular task" required placeholder="Title">
+        <input type="text" class="form-control form-control-lg" id="title" value="${toDo.title}" required placeholder="Title">
       </div>
       <div class="form-group">
         <label for="description">Description:</label>
-        <textarea class="form-control" id="description" rows="5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla! Esse sint numquam laboriosam saepe quidem, veniam eaque nulla temporibus provident accusamus autem reprehenderit facilis quibusdam eius et soluta?</textarea>
+        <textarea class="form-control" id="description" rows="5">${toDo.description}</textarea>
       </div>
       <div class="form-group">
-        <label for="dueDate">Due on:</label>
-        <input type="date" class="form-control form-control-sm" id="dueDate" value="2019-08-31">
+        <label for="dueDate">Due on (DD/MM/YYYY):</label>
+        <input type="text" class="form-control form-control-sm" id="dueDate" value="${ format(toDo.dueDate, 'DD/MM/YYYY') }">
       </div>
 
       <div class="form-group">
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="priority" id="low" value="low">
+          <input class="form-check-input" type="radio" name="priority" id="low" value="low"
+            ${priority.low ? 'checked' : ''}>
           <label class="form-check-label" for="low">
             <span class="badge badge-secondary">&nbsp;</span>
             Low
           </label>
         </div>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="priority" id="regular" value="regular" checked>
+          <input class="form-check-input" type="radio" name="priority" id="regular" value="regular"
+            ${priority.regular ? 'checked' : ''}>
           <label class="form-check-label" for="regular">
             <span class="badge badge-success">&nbsp;</span>
             Regular
           </label>
         </div>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="priority" id="high" value="high">
+          <input class="form-check-input" type="radio" name="priority" id="high" value="high"
+            ${priority.high ? 'checked' : ''}>
           <label class="form-check-label" for="high">
             <span class="badge badge-danger">&nbsp;</span>
             High
@@ -185,10 +194,10 @@ const DOM = (function() {
         </div>
       </div>
       <div class="form-group text-right">
-        <button class="btn btn-danger">Delete the TODO</button>
+        <button id="deleteTodo" class="btn btn-danger">Delete the TODO</button>
         <button type="submit" class="btn btn-warning" disabled>Update</button>
       </div>
-    `;
+    `;    
 
     singleToDoView.innerHTML = '';
     singleToDoView.append(completeButtonContainer);
