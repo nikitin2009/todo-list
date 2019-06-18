@@ -5,7 +5,7 @@ export default function getSampleData() {
   const projects = [new Project('Default project')];
   const regularTodo = new Todo({
     title: 'A regular task',
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla!',
+    description: 'Lorem ipsum dolor sit amet consectetur',
     dueDate: new Date(2019, 7, 31),
     priority: 'regular'
   });
@@ -17,13 +17,13 @@ export default function getSampleData() {
   });
   const highPriorityTodo = new Todo({
     title: 'High priority',
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla!',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla!',
     dueDate: new Date(2019, 7, 31),
     priority: 'high'
   });
   const lowPriorityTodo = new Todo({
     title: 'Low priority',
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla!',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla!',
     dueDate: new Date(2019, 7, 31),
     priority: 'low'
   });

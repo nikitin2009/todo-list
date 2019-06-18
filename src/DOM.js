@@ -115,10 +115,12 @@ const DOM = (function() {
     toDosList.append(a);
   }
 
-  function setActiveToDo(toDoElement) {
+  function setActiveToDo(toDoElement, toDoObject) {
     const currentActive = toDoElement.parentElement.querySelector('.active');
     if (currentActive) currentActive.classList.remove('active');
     toDoElement.classList.add('active');
+
+    renderSingleToDo(toDoObject);
   }
 
   function getPriorityBadgeClass(priority) {

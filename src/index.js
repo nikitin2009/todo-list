@@ -68,7 +68,7 @@ const App = (function() {
     const toDoId = e.target.dataset.toDoId;
     state.currentTodo = state.currentProject.toDos.find(toDo => toDo.id == toDoId);
     
-    DOM.setActiveToDo(e.target);
+    DOM.setActiveToDo(e.target, state.currentTodo);
   }
 
 
