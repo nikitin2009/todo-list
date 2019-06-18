@@ -39,6 +39,7 @@ const DOM = (function() {
                     'align-items-center');
     a.addEventListener('click', projectClickHandler)
     projectsList.append(a);
+    return a;
   }
 
   function removeProject(projectElement) {
@@ -78,7 +79,14 @@ const DOM = (function() {
       addToDo(toDo, toDoClickHandler);
     });
 
-    toDosList.children[0].classList.add('active');
+    if (project.toDos.length === 0) {
+      singleToDoView.innerHTML = '';
+      return null;
+    } else {
+      let toDoElement = toDosList.children[0];
+      toDoElement.classList.add('active');
+      setActiveToDo(toDoElement, project.toDos[0])
+    }
   }
 
   function addToDo(toDo, toDoClickHandler) {

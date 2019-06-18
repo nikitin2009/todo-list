@@ -36,7 +36,10 @@ const App = (function() {
     if (projectTitle) {
       const project = new Project(projectTitle);
       state.projects.push(project);
-      DOM.addProject(project, projectClickHandler, projectRemoveHandler);
+      state.currentProject = project;
+      const projectElement = DOM.addProject(project, projectClickHandler, projectRemoveHandler);
+      DOM.setActiveProject(projectElement);
+      DOM.renderToDos(state.currentProject, toDoClickHandler);
     } else {
       alert('Cann\'t be blank!');
     }
@@ -47,6 +50,7 @@ const App = (function() {
     const projectId = e.target.dataset.projectId;
     state.currentProject = state.projects.find(project => project.id == projectId);
     DOM.setActiveProject(e.target);
+    DOM.renderToDos(state.currentProject, toDoClickHandler);
   }
 
   function projectRemoveHandler(e) {
