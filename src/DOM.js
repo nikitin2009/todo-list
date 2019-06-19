@@ -247,6 +247,10 @@ const DOM = (function() {
     singleToDoView.append(form);
   }
 
+  function setFocusOnToDoTitle() {
+    singleToDoView.querySelector('input[name="title"]').select();
+  }
+
   return {
     renderProjects,
     addProject,
@@ -255,7 +259,8 @@ const DOM = (function() {
     renderToDos,
     setActiveToDo,
     renderSingleToDo,
-    emptyScreen
+    emptyScreen,
+    setFocusOnToDoTitle,
   }
 
 })();

@@ -94,6 +94,8 @@ const App = (function() {
     e.preventDefault();
     const projectId = e.target.dataset.projectId;
     state.currentProject = state.projects.find(project => project.id == projectId);
+    state.currentTodo = state.currentProject.toDos[0];
+
     DOM.setActiveProject(e.target);
     DOM.renderToDos(state.currentProject, toDoClickHandler, addToDoClickHandler, singleToDoClickHandlers);
   }
@@ -116,7 +118,7 @@ const App = (function() {
         state.currentProject = newCurrentProject;
         
         DOM.setActiveProject(projectsListNode.children[0]);
-        DOM.renderToDos(newCurrentProject, toDoClickHandler, addToDoClickHandler,ngleToDoClickHandlers);
+        DOM.renderToDos(newCurrentProject, toDoClickHandler, addToDoClickHandler,singleToDoClickHandlers);
       } else {
         state.currentProject = null;
         DOM.emptyScreen();
@@ -146,8 +148,19 @@ const App = (function() {
     e.preventDefault();
     
     const toDo = new Todo({
-
+      title: 'New Todo',
+      description: '',
+      dueDate: null,
+      priority: 'low'
     });
+
+    state.currentProject.toDos.push(toDo);
+    state.currentTodo = toDo;
+    updateLocalStorage();
+
+    DOM.renderToDos(state.currentProject, toDoClickHandler, addToDoClickHandler, singleToDoClickHandlers);
+    DOM.setActiveToDo(state.currentTodo, singleToDoClickHandlers);
+    DOM.setFocusOnToDoTitle();
   }
 
   return {
