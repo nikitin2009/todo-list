@@ -9,6 +9,11 @@ const DOM = (function() {
 
   const singleToDoView = document.getElementById('singleToDoView');
 
+  function emptyScreen() {
+    toDosView.innerHTML = '';
+    singleToDoView.innerHTML = '';
+  }
+
   //================ Projects
   function renderProjects(projects, projectClickHandler, projectRemoveHandler) {
     projectsList.innerHTML = '';
@@ -157,6 +162,7 @@ const DOM = (function() {
     const deleteButton = document.createElement('button');
     const updateButton = document.createElement('button');
     const formButtonsContainer = document.createElement('div');
+    const dateValidationRegEx = '^\\d{2}/\\d{2}/\\d{4}$';
 
     const priority = {
       low: toDo.priority == 'low',
@@ -180,15 +186,17 @@ const DOM = (function() {
     form.innerHTML = `
       <div class="form-group">
         <label class="sr-only" for="title">Title</label>
-        <input type="text" class="form-control form-control-lg" id="title" value="${toDo.title}" required placeholder="Title">
+        <input type="text" class="form-control form-control-lg" id="title" name="title" value="${toDo.title}" required placeholder="Title">
       </div>
       <div class="form-group">
         <label for="description">Description:</label>
-        <textarea class="form-control" id="description" rows="5">${toDo.description}</textarea>
+        <textarea class="form-control" id="description" name="description" rows="5">${toDo.description}</textarea>
       </div>
       <div class="form-group">
         <label for="dueDate">Due on (DD/MM/YYYY):</label>
-        <input type="text" class="form-control form-control-sm" id="dueDate" value="${ format(toDo.dueDate, 'DD/MM/YYYY') }">
+        <input type="text" class="form-control form-control-sm" id="dueDate" name="dueDate"
+          value="${ format(toDo.dueDate, 'DD/MM/YYYY') }"
+          pattern="${ dateValidationRegEx }">
       </div>
 
       <div class="form-group">
@@ -219,18 +227,19 @@ const DOM = (function() {
       </div>
     `;
 
-    deleteButton.classList.add('btn', 'btn-danger', 'mr-2');
-    deleteButton.innerHTML = 'Delete the TODO';
+    deleteButton.classList.add('btn', 'btn-danger', 'float-left');
+    deleteButton.innerHTML = 'Delete';
     deleteButton.addEventListener('click', singleToDoClickHandlers.deleteButtonHandler);
-    updateButton.classList.add('btn', 'btn-warning');
+    updateButton.classList.add('btn', 'btn-warning', 'mr-2');
     updateButton.innerHTML = 'Update';
-    updateButton.addEventListener('click', singleToDoClickHandlers.updateButtonHandler);
+    updateButton.type = 'submit';
 
     formButtonsContainer.classList.add('form-group', 'text-right');
-    formButtonsContainer.append(deleteButton);
     formButtonsContainer.append(updateButton);
+    formButtonsContainer.append(deleteButton);
 
     form.append(formButtonsContainer);
+    form.addEventListener('submit', singleToDoClickHandlers.editFormSubmitHandler);
 
     singleToDoView.innerHTML = '';
     singleToDoView.append(completeButtonContainer);
@@ -245,6 +254,7 @@ const DOM = (function() {
     renderToDos,
     setActiveToDo,
     renderSingleToDo,
+    emptyScreen
   }
 
 })();

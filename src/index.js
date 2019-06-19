@@ -25,14 +25,28 @@ const App = (function() {
       const confirmationCopy = 'Are you sure, you want to remove the TODO?';
       if (confirm(confirmationCopy)) {
         state.currentProject.toDos = state.currentProject.toDos.filter(toDo => toDo.id !== state.currentTodo.id);
+        state.currentTodo = state.currentProject.toDos[0];
         updateLocalStorage();
 
         DOM.renderToDos(state.currentProject, toDoClickHandler, singleToDoClickHandlers);
       }
     },
-    updateButtonHandler: function(e) {
+    editFormSubmitHandler: function(e) {
       e.preventDefault();
-      console.log(e);
+      const formData = new FormData(e.target);
+      
+      for (let [key, value] of formData.entries()) {
+        if (key === 'dueDate') {
+          value = new Date(value.split('/').reverse().join(' '))
+        }
+        state.currentTodo[key] = value;
+      }
+
+      updateLocalStorage();
+      alert('Updated!');
+
+      DOM.renderToDos(state.currentProject, toDoClickHandler, singleToDoClickHandlers);
+      DOM.setActiveToDo(state.currentTodo, singleToDoClickHandlers);
     },
   };
 
@@ -46,8 +60,8 @@ const App = (function() {
                       getSampleData();
 
     state.projects = projects;
-    state.currentProject = state.projects[0];
-    state.currentTodo = state.currentProject.toDos[0];
+    state.currentProject = state.projects[0] || null;
+    state.currentTodo = state.currentProject ? state.currentProject.toDos[0] : null;
   }
 
   function setEventListeners() {
@@ -92,7 +106,7 @@ const App = (function() {
     if (confirm(confirmationCopy)) {
       const projectsListNode = e.target.parentNode.parentNode;
       const projectId = e.target.parentElement.dataset.projectId;
-      state.projects = state.projects.filter(project => project.id !== projectId);
+      state.projects = state.projects.filter(project => project.id != projectId);
       updateLocalStorage();
       DOM.removeProject(e.target.parentElement);
 
@@ -105,6 +119,7 @@ const App = (function() {
         DOM.renderToDos(newCurrentProject, toDoClickHandler, singleToDoClickHandlers);
       } else {
         state.currentProject = null;
+        DOM.emptyScreen();
       }
     }
   }
@@ -122,9 +137,9 @@ const App = (function() {
   function init() {
     setInitState();
     setEventListeners();
-    DOM.renderProjects(state.projects, projectClickHandler, projectRemoveHandler);    
-    DOM.renderToDos(state.currentProject, toDoClickHandler, singleToDoClickHandlers);
-    DOM.renderSingleToDo(state.currentTodo, singleToDoClickHandlers);
+    if (state.projects.length > 0)DOM.renderProjects(state.projects, projectClickHandler, projectRemoveHandler);    
+    if (state.currentProject) DOM.renderToDos(state.currentProject, toDoClickHandler, singleToDoClickHandlers);
+    if (state.currentTodo) DOM.renderSingleToDo(state.currentTodo, singleToDoClickHandlers);
   }
 
   return {
