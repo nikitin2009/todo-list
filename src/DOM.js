@@ -224,7 +224,6 @@ const DOM = (function() {
     deleteButton.addEventListener('click', singleToDoClickHandlers.deleteButtonHandler);
     updateButton.classList.add('btn', 'btn-warning');
     updateButton.innerHTML = 'Update';
-    updateButton.disabled = true;
     updateButton.addEventListener('click', singleToDoClickHandlers.updateButtonHandler);
 
     formButtonsContainer.classList.add('form-group', 'text-right');

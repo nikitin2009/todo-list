@@ -16,13 +16,19 @@ const App = (function() {
       e.preventDefault();
       state.currentTodo.completed = !state.currentTodo.completed;
       updateLocalStorage();
-      
+
       DOM.renderToDos(state.currentProject, toDoClickHandler, singleToDoClickHandlers);
       DOM.setActiveToDo(state.currentTodo, singleToDoClickHandlers);
     },
     deleteButtonHandler: function(e) {
       e.preventDefault();
-      console.log(e);
+      const confirmationCopy = 'Are you sure, you want to remove the TODO?';
+      if (confirm(confirmationCopy)) {
+        state.currentProject.toDos = state.currentProject.toDos.filter(toDo => toDo.id !== state.currentTodo.id);
+        updateLocalStorage();
+
+        DOM.renderToDos(state.currentProject, toDoClickHandler, singleToDoClickHandlers);
+      }
     },
     updateButtonHandler: function(e) {
       e.preventDefault();
