@@ -3,7 +3,7 @@ export default class Project {
   constructor(title) {
     this.title = title;
     this.toDos = [];
-    this.id = Project.id + (new Date());
+    this.id = Project.id + (+new Date());
     Project.id++;
   }
 

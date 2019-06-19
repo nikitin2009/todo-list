@@ -53,7 +53,7 @@ const DOM = (function() {
   }
 
   //=================== ToDos
-  function renderToDos(project, toDoClickHandler) {
+  function renderToDos(project, toDoClickHandler, singleToDoClickHandlers) {
     const title = document.createElement('h2');
     const addToDoButton = document.createElement('a');
     const addToDoButtonContainer = document.createElement('div');
@@ -85,7 +85,7 @@ const DOM = (function() {
     } else {
       let toDoElement = toDosList.children[0];
       toDoElement.classList.add('active');
-      setActiveToDo(toDoElement, project.toDos[0])
+      setActiveToDo(project.toDos[0], singleToDoClickHandlers)
     }
   }
 
@@ -126,12 +126,13 @@ const DOM = (function() {
     toDosList.append(a);
   }
 
-  function setActiveToDo(toDoElement, toDoObject) {
+  function setActiveToDo(toDoObject, singleToDoClickHandlers) {
+    const toDoElement = toDosList.querySelector(`[data-to-do-id="${toDoObject.id}"]`);
     const currentActive = toDoElement.parentElement.querySelector('.active');
     if (currentActive) currentActive.classList.remove('active');
     toDoElement.classList.add('active');
 
-    renderSingleToDo(toDoObject);
+    renderSingleToDo(toDoObject, singleToDoClickHandlers);
   }
 
   function getPriorityBadgeClass(priority) {
@@ -149,10 +150,13 @@ const DOM = (function() {
     return className;
   }
 
-  function renderSingleToDo(toDo) {
+  function renderSingleToDo(toDo, singleToDoClickHandlers) {
     const completeButton = document.createElement('button');
     const completeButtonContainer = document.createElement('div');
     const form = document.createElement('form');
+    const deleteButton = document.createElement('button');
+    const updateButton = document.createElement('button');
+    const formButtonsContainer = document.createElement('div');
 
     const priority = {
       low: toDo.priority == 'low',
@@ -160,8 +164,15 @@ const DOM = (function() {
       high: toDo.priority == 'high'
     }
 
-    completeButton.classList.add('btn', 'btn-success');
-    completeButton.innerHTML = 'Complete &#10003;';
+    completeButton.classList.add('btn');
+    if (toDo.completed) {
+      completeButton.classList.add('btn-secondary');
+      completeButton.innerHTML = 'Restore';
+    } else {
+      completeButton.classList.add('btn-success');
+      completeButton.innerHTML = 'Complete &#10003;';
+    }
+    completeButton.addEventListener('click', singleToDoClickHandlers.completeButtonHandler);
 
     completeButtonContainer.classList.add('text-right', 'mb-3');
     completeButtonContainer.append(completeButton);
@@ -206,11 +217,21 @@ const DOM = (function() {
           </label>
         </div>
       </div>
-      <div class="form-group text-right">
-        <button id="deleteTodo" class="btn btn-danger">Delete the TODO</button>
-        <button type="submit" class="btn btn-warning" disabled>Update</button>
-      </div>
-    `;    
+    `;
+
+    deleteButton.classList.add('btn', 'btn-danger', 'mr-2');
+    deleteButton.innerHTML = 'Delete the TODO';
+    deleteButton.addEventListener('click', singleToDoClickHandlers.deleteButtonHandler);
+    updateButton.classList.add('btn', 'btn-warning');
+    updateButton.innerHTML = 'Update';
+    updateButton.disabled = true;
+    updateButton.addEventListener('click', singleToDoClickHandlers.updateButtonHandler);
+
+    formButtonsContainer.classList.add('form-group', 'text-right');
+    formButtonsContainer.append(deleteButton);
+    formButtonsContainer.append(updateButton);
+
+    form.append(formButtonsContainer);
 
     singleToDoView.innerHTML = '';
     singleToDoView.append(completeButtonContainer);

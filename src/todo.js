@@ -6,7 +6,7 @@ export default class Todo {
     this.dueDate = dueDate;
     this.priority = priority;
     this.completed = false;
-    this.id = Todo.id + (new Date());
+    this.id = Todo.id + (+new Date());
     Todo.id++;
   }
 
