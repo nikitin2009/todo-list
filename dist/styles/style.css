@@ -40,6 +40,10 @@ main {
   color: #000;
 }
 
+#toDosList > a.completed {
+  text-decoration: line-through;
+}
+
 #toDosList > a > span {
   pointer-events: none;
 }

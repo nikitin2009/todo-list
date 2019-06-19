@@ -119,6 +119,9 @@ const DOM = (function() {
                     'd-flex',
                     'justify-content-between',
                     'align-items-center');
+    if (toDo.completed) {
+      a.classList.add('completed');
+    }
     a.addEventListener('click', toDoClickHandler)
     toDosList.append(a);
   }

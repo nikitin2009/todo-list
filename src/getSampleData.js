@@ -15,12 +15,13 @@ export default function getSampleData() {
     dueDate: new Date(2019, 0, 1),
     priority: 'regular'
   });
-  const highPriorityTodo = new Todo({
-    title: 'High priority',
+  const highPriorityTodoCompleted = new Todo({
+    title: 'High priority (completed)',
     description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla!',
     dueDate: new Date(2019, 7, 31),
     priority: 'high'
   });
+  highPriorityTodoCompleted.completed = true;
   const lowPriorityTodo = new Todo({
     title: 'Low priority',
     description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla!',
@@ -28,7 +29,7 @@ export default function getSampleData() {
     priority: 'low'
   });
 
-  projects[0].toDos.push(regularTodo, expiredTodo, highPriorityTodo, lowPriorityTodo);
+  projects[0].toDos.push(regularTodo, expiredTodo, highPriorityTodoCompleted, lowPriorityTodo);
 
   return projects;
 }
