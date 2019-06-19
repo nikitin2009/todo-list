@@ -17,7 +17,7 @@ const App = (function() {
       state.currentTodo.completed = !state.currentTodo.completed;
       updateLocalStorage();
 
-      DOM.renderToDos(state.currentProject, toDoClickHandler, singleToDoClickHandlers);
+      DOM.renderToDos(state.currentProject, toDoClickHandler, addToDoClickHandler, singleToDoClickHandlers);
       DOM.setActiveToDo(state.currentTodo, singleToDoClickHandlers);
     },
     deleteButtonHandler: function(e) {
@@ -28,7 +28,7 @@ const App = (function() {
         state.currentTodo = state.currentProject.toDos[0];
         updateLocalStorage();
 
-        DOM.renderToDos(state.currentProject, toDoClickHandler, singleToDoClickHandlers);
+        DOM.renderToDos(state.currentProject, toDoClickHandler, addToDoClickHandler, singleToDoClickHandlers);
       }
     },
     editFormSubmitHandler: function(e) {
@@ -37,7 +37,7 @@ const App = (function() {
       
       for (let [key, value] of formData.entries()) {
         if (key === 'dueDate') {
-          value = new Date(value.split('/').reverse().join(' '))
+          value = value ? new Date(value.split('/').reverse().join(' ')) : null;
         }
         state.currentTodo[key] = value;
       }
@@ -45,7 +45,7 @@ const App = (function() {
       updateLocalStorage();
       alert('Updated!');
 
-      DOM.renderToDos(state.currentProject, toDoClickHandler, singleToDoClickHandlers);
+      DOM.renderToDos(state.currentProject, toDoClickHandler, addToDoClickHandler, singleToDoClickHandlers);
       DOM.setActiveToDo(state.currentTodo, singleToDoClickHandlers);
     },
   };
@@ -84,7 +84,7 @@ const App = (function() {
 
       const projectElement = DOM.addProject(project, projectClickHandler, projectRemoveHandler);
       DOM.setActiveProject(projectElement);
-      DOM.renderToDos(state.currentProject, toDoClickHandler, singleToDoClickHandlers);
+      DOM.renderToDos(state.currentProject, toDoClickHandler, addToDoClickHandler, singleToDoClickHandlers);
     } else {
       alert('Cann\'t be blank!');
     }
@@ -95,7 +95,7 @@ const App = (function() {
     const projectId = e.target.dataset.projectId;
     state.currentProject = state.projects.find(project => project.id == projectId);
     DOM.setActiveProject(e.target);
-    DOM.renderToDos(state.currentProject, toDoClickHandler, singleToDoClickHandlers);
+    DOM.renderToDos(state.currentProject, toDoClickHandler, addToDoClickHandler, singleToDoClickHandlers);
   }
 
   function projectRemoveHandler(e) {
@@ -116,7 +116,7 @@ const App = (function() {
         state.currentProject = newCurrentProject;
         
         DOM.setActiveProject(projectsListNode.children[0]);
-        DOM.renderToDos(newCurrentProject, toDoClickHandler, singleToDoClickHandlers);
+        DOM.renderToDos(newCurrentProject, toDoClickHandler, addToDoClickHandler,ngleToDoClickHandlers);
       } else {
         state.currentProject = null;
         DOM.emptyScreen();
@@ -138,8 +138,16 @@ const App = (function() {
     setInitState();
     setEventListeners();
     if (state.projects.length > 0)DOM.renderProjects(state.projects, projectClickHandler, projectRemoveHandler);    
-    if (state.currentProject) DOM.renderToDos(state.currentProject, toDoClickHandler, singleToDoClickHandlers);
+    if (state.currentProject) DOM.renderToDos(state.currentProject, toDoClickHandler, addToDoClickHandler, singleToDoClickHandlers);
     if (state.currentTodo) DOM.renderSingleToDo(state.currentTodo, singleToDoClickHandlers);
+  }
+
+  function addToDoClickHandler(e) {
+    e.preventDefault();
+    
+    const toDo = new Todo({
+
+    });
   }
 
   return {

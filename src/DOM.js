@@ -58,7 +58,7 @@ const DOM = (function() {
   }
 
   //=================== ToDos
-  function renderToDos(project, toDoClickHandler, singleToDoClickHandlers) {
+  function renderToDos(project, toDoClickHandler, addToDoClickHandler, singleToDoClickHandlers) {
     const title = document.createElement('h2');
     const addToDoButton = document.createElement('a');
     const addToDoButtonContainer = document.createElement('div');
@@ -70,6 +70,7 @@ const DOM = (function() {
     addToDoButton.title = 'Add new TODO';
     addToDoButton.classList.add('h3');
     addToDoButton.innerText = '+';
+    addToDoButton.addEventListener('click', addToDoClickHandler);
 
     addToDoButtonContainer.classList.add('text-center');
     addToDoButtonContainer.append(addToDoButton)
@@ -108,7 +109,7 @@ const DOM = (function() {
     title.classList.add('title', 'flex-fill', 'mx-2');
     title.innerHTML = toDo.title;
 
-    date.innerHTML = `(due on ${ format(toDo.dueDate, 'DD/MM/YYYY') })`;
+    date.innerHTML = toDo.dueDate ? `(due on ${ format(toDo.dueDate, 'DD/MM/YYYY') })` : '';
     date.classList.add('small', 'due-date');
     if (isPast(toDo.dueDate)) {
       date.classList.add('text-danger', 'font-weight-bold');
@@ -193,9 +194,9 @@ const DOM = (function() {
         <textarea class="form-control" id="description" name="description" rows="5">${toDo.description}</textarea>
       </div>
       <div class="form-group">
-        <label for="dueDate">Due on (DD/MM/YYYY):</label>
+        <label for="dueDate">Due on (dd/mm/yyyy or  empty for no date):</label>
         <input type="text" class="form-control form-control-sm" id="dueDate" name="dueDate"
-          value="${ format(toDo.dueDate, 'DD/MM/YYYY') }"
+          value="${ toDo.dueDate ? format(toDo.dueDate, 'DD/MM/YYYY') : '' }"
           pattern="${ dateValidationRegEx }">
       </div>
 

@@ -28,8 +28,14 @@ export default function getSampleData() {
     dueDate: new Date(2019, 7, 31),
     priority: 'low'
   });
+  const noDueDateTodo = new Todo({
+    title: 'No date',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolorum nulla!',
+    dueDate: null,
+    priority: 'low'
+  });
 
-  projects[0].toDos.push(regularTodo, expiredTodo, highPriorityTodoCompleted, lowPriorityTodo);
+  projects[0].toDos.push(regularTodo, expiredTodo, highPriorityTodoCompleted, lowPriorityTodo, noDueDateTodo);
 
   return projects;
 }
