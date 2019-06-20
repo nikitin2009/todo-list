@@ -4,11 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>TODO list</title>
+  <title>TODO list app</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
-  <div id="content"></div>
+
+  <h1 class="text-center text-white">Just TODO it!</h1>
+
+  <div id="app">
+
+    <aside class="text-white bg-secondary">
+      <h2 class="mb-3 px-5">My projects</h2>
+      <div id="projectsList" class="list-group list-group-flush mb-2">
+      </div>
+      <div class="text-center">
+        <a href="#" id="addProject" title="Add new project" class="h3 text-white">+</a>
+      </div>
+    </aside>
+
+    <main class="flex-fill d-flex">
+
+      <div id="toDosView" class="w-50 ml-3">
+        <div id="toDosList" class="list-group list-group-flush mb-2">
+        </div>
+      </div>
+
+      <div id="singleToDoView" class="w-50 bg-primary text-white mr-3 p-3">
+      </div>
+
+    </main>
+
+  </div>
   
   <script src="./js/main.js"></script>
 </body>
