@@ -166,9 +166,9 @@ const DOM = (function() {
     const dateValidationRegEx = '^\\d{2}/\\d{2}/\\d{4}$';
 
     const priority = {
-      low: toDo.priority == 'low',
-      regular: toDo.priority == 'regular',
-      high: toDo.priority == 'high'
+      low: toDo.priority === 'low',
+      regular: toDo.priority === 'regular',
+      high: toDo.priority === 'high'
     }
 
     completeButton.classList.add('btn');
